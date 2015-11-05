@@ -1,0 +1,6 @@
+pq = load '/Inpatient.csv' using PigStorage(',')AS(def:chararray,id:int,name:chararray,address:chararray,city:chararray,state:chararray,zip:int,discription:chararray,discharge:int,chargeamt:float,totalpaymentsamt:float,paymentamt:float);
+pa = foreach pq generate state , discharge;
+pa1 = filter pa by SIZE(state)<3;
+gw = group pa1 by state;
+re = foreach gw generate group , COUNT(pa1.state);
+dump re;
