@@ -1,0 +1,7 @@
+pq = load '/Inpatient.csv' using PigStorage(',')AS(def:chararray,id:int,name:chararray,address:chararray,city:chararray,state:chararray,zip:int,discription:chararray,discharge:int,chargeamt:float,totalpaymentsamt:float,paymentamt:float);
+pa = foreach pq generate $0 as defination ,$5 as state;
+s = filter pa by (defination matches '176 - PULMONARY EMBOLISM W/O MCC');
+gd = group s by $1;
+re = foreach gd generate group , COUNT(s.$1);
+dump 
+
