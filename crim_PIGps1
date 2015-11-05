@@ -1,0 +1,5 @@
+pq = load '/crime11.csv' using PigStorage(',')AS(ID:int,CaseNumber:chararray,Date:chararray,Block:chararray,IUCR:chararray,PrimaryType:chararray,Description:chararray,LocationDescription:chararray,Arrest:chararray,Domestic:chararray,Beat:chararray,District:chararray,Ward:chararray,CommunityArea:chararray,FBIcode:chararray,XCoordinate:chararray,YCoordinate:chararray,Year:chararray,UpdatedOn:chararray,Latitude:chararray,Longitude:chararray,Location:chararray);
+pa = foreach pq generate ID,FBIcode ;
+gr = group pa by FBIcode;
+ct = foreach gr generate group,COUNT(pa.ID);
+dump ct;
