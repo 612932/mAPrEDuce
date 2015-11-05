@@ -1,0 +1,6 @@
+pq = load '/Inpatient.csv' using PigStorage(',')AS(def:chararray,id:int,name:chararray,address:chararray,city:chararray,state:chararray,zip:int,discription:chararray,discharge:int,chargeamt:chararray,totalpaymentsamt:chararray,paymentamt:chararray);
+pa = foreach pq generate state,(float)REPLACE(totalpaymentsamt,'([^0-9.\\d]+)','') ;
+s1 = filter pa by (state matches 'AL');
+gd = group s1 by $0;
+re = foreach gd generate group,(float)SUM(s1.$1);
+dump re;
