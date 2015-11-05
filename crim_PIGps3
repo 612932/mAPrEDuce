@@ -1,0 +1,7 @@
+pq = load '/crime11.csv' using PigStorage(',')AS(ID:int,CaseNumber:chararray,Date:chararray,Block:chararray,IUCR:chararray,PrimaryType:chararray,Description:chararray,LocationDescription:chararray,Arrest:chararray,Domestic:chararray,Beat:chararray,District:chararray,Ward:chararray,CommunityArea:chararray,FBIcode:chararray,XCoordinate:chararray,YCoordinate:chararray,Year:chararray,UpdatedOn:chararray,Latitude:chararray,Longitude:chararray,Location:chararray);
+pa = foreach pq generate Arrest,District,PrimaryType;
+fl = filter pa by ($2 == 'THEFT') AND ($0 == 'true');
+g = group fl ALL;
+ct = foreach g generate COUNT(fl);
+dump ct;
+
