@@ -1,0 +1,7 @@
+pi = load '/studentD.txt' using PigStorage(',')AS(f1:chararray,f2:chararray,f3:chararray,f4:chararray,f5:float,f6:chararray,f7:chararray);
+pa = foreach pi generate (float)f5,f1;
+fil = filter pa by f5<5;
+g = group fil by null;
+c = foreach g generate group,COUNT(fil);
+dump;
+
