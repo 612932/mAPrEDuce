@@ -1,0 +1,5 @@
+pi = load '/studentD.txt' using PigStorage(',')AS(f1:chararray,f2:chararray,f3:chararray,f4:chararray,f5:float,f6:chararray,f7:chararray);
+ pa = foreach pi generate f1,f4,f6;
+q  = filter pa by (f6 matches 'oregon')AND (f4 matches 'BE');
+dump;
+
